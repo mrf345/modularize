@@ -1,0 +1,36 @@
+{
+  "name": "modularize",
+  "version": "0.0.1",
+  "description": "module to parse and include html templates",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrf345/modularize.git"
+  },
+  "keywords": [
+    "templates",
+    "modules",
+    "html",
+    "parse"
+  ],
+  "author": "Mohamed Feddad",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mrf345/modularize/issues"
+  },
+  "homepage": "https://github.com/mrf345/modularize#readme",
+  "devDependencies": {
+    "@babel/core": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "@types/jest": "^24.0.23",
+    "babel-jest": "^24.9.0",
+    "jest": "^24.9.0"
+  },
+  "dependencies": {
+    "jsdom": "^15.2.1",
+    "node-fetch": "^2.6.0"
+  }
+}
