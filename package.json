@@ -4,8 +4,9 @@
   "description": "module to parse and include html templates",
   "main": "src/index.js",
   "scripts": {
-    "test": "jest",
+    "test": "standard './src/*.js' && jest",
     "build": "webpack --config webpack.config.js",
+    "format": "standard --fix './src/*.js'",
     "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls"
   },
   "repository": {
@@ -35,10 +36,25 @@
     "coveralls": "^3.0.9",
     "jest": "^24.9.0",
     "jsdom": "15.2.1",
+    "standard": "14.3.1",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
   },
   "dependencies": {
     "@babel/polyfill": "^7.7.0"
+  },
+  "standard": {
+    "globals": [
+      "beforeEach",
+      "afterEach",
+      "it",
+      "test",
+      "assert",
+      "window",
+      "fetch",
+      "document",
+      "expect",
+      "describe"
+    ]
   }
 }
