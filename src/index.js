@@ -9,6 +9,7 @@ export default class Modularize {
      * @param {integer} startsFrom index number to start descending from.
      * @param {array} bypass array of index numbers to skip.
      * @param {string} extension the template file extension.
+     * @param {boolean} autoLoad load the templates automatically on initiation.
      *
      * `data` I.E: {1: {var1: 'something', name: 'something else'}, ...}
      *  NOTE: if data is meant to be global then use '*' as a key instead of
