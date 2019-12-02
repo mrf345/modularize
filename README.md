@@ -1,15 +1,23 @@
-# Modularize
 
-<a href='https://travis-ci.org/mrf345/modularize'> <img src='https://travis-ci.org/mrf345/modularize.svg?branch=master' alt='Build Status' /></a>
-<a href='https://coveralls.io/github/mrf345/modularize?branch=testing'><img src='https://coveralls.io/repos/github/mrf345/modularize/badge.svg?branch=testing' alt='Coverage Status' /></a>
+<p align='center'>
+  <h1> Modularize </h1>
 
+  <a href='https://travis-ci.org/mrf345/modularize'> <img src='https://travis-ci.org/mrf345/modularize.svg?branch=master' alt='Build Status' /></a>
+  <a href='https://coveralls.io/github/mrf345/modularize?branch=testing'><img src='https://coveralls.io/repos/github/mrf345/modularize/badge.svg?branch=testing' alt='Coverage Status' /></a>
+  <a href='https://www.npmjs.com/package/@mrf3/modularize'><img src='https://img.shields.io/npm/v/@mrf3/modularize' /></a>
+  <a href="https://standardjs.com"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Standard - JavaScript Style Guide"></a>
+</p>
 
 #### Install:
-`npm i modularize --save`
+`npm i @mrf3/modularize --save`
 
 #### Usage:
 ```javascript
-import Modularize from 'modularize'
+// ES5
+const Modularize = require('@mrf3/modularize').default
+
+// ES6
+import Modularize from '@mrf3/modularize'
 
 const templates = new Modularize(
     /**

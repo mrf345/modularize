@@ -1,20 +1,18 @@
 import Modularize from './index'
+import fetch from 'node-fetch'
 import { JSDOM } from 'jsdom'
+
+jest.mock('node-fetch')
 
 describe('Testing modules main functionalities', () => {
   const self = {}
 
   beforeEach(() => {
     self.templateContent = '<h1>Resolved! {{ test }}</h1>'
-    self.mockFetchSuccess = new Promise(
-      (resolve, reject) => resolve({ status: 200, text: () => self.templateContent }))
-    self.mockFetchFail = new Promise((resolve, reject) => reject(TypeError()))
-    // added another couple to test `.load()` while `autoLoad == true`
-    self.fetchSideEffects = [
-      self.mockFetchSuccess, self.mockFetchFail,
-      self.mockFetchSuccess, self.mockFetchFail]
+    function text () { return self.templateContent } // strange js behaviour...
+    self.mockResponse = { status: 200, text: text }
     self.mockDom = new JSDOM()
-    global.fetch = () => self.fetchSideEffects.pop()
+    fetch.mockRejectedValue()
     global.window = self.mockDom.window
     global.document = global.window.document
 
@@ -36,11 +34,16 @@ describe('Testing modules main functionalities', () => {
   })
 
   it('test getTemplate', () => {
-    const response = self.module.getTemplate(1)
+    fetch.mockResolvedValue(self.mockResponse)
+    expect.assertions(1)
+    return expect(self.module.getTemplate(1)).resolves.toBe(self.templateContent)
+  })
 
-    expect.assertions(2)
-    expect(response).toMatchObject(self.mockFetchSuccess)
-    return response.then(content => expect(content).toBe(self.templateContent))
+  it('test getTemplate falsy status', () => {
+    self.mockResponse.status = 400
+    fetch.mockResolvedValue(self.mockResponse)
+    expect.assertions(1)
+    return expect(self.module.getTemplate(1)).resolves.toBe(undefined)
   })
 
   test('parse parseContent', () => {
@@ -59,12 +62,15 @@ describe('Testing modules main functionalities', () => {
   })
 
   it('test load promise success', () => {
+    expect.assertions(1)
     return expect(self.module.load()).resolves.toEqual('loaded')
   })
 
   it('test load promise failure', () => {
     const exception = TypeError('testing')
     self.module.getTemplate = () => { throw exception }
+
+    expect.assertions(1)
     return expect(self.module.load()).rejects.toEqual(exception)
   })
 })

@@ -1,4 +1,8 @@
 import '@babel/polyfill'
+import fetch from 'node-fetch'
+import { JSDOM } from 'jsdom'
+const { window } = new JSDOM('<div class="modularize"></div>')
+const { document } = window
 
 export default class Modularize {
   /**
