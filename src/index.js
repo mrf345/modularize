@@ -46,18 +46,18 @@ export default class Modularize {
   parseContent (index, content) {
     const indexData = this.data[index] || this.data['*']
     const pattern = /(?<=\{{).+?(?=}})/g
-    let parsedContent = content; let match; let matchValue
+    let parsedContent = content
 
-    if (indexData) {
-      while (true) {
-        match = (pattern.exec(parsedContent) || [])[0]
+    indexData && (function recursMatches () {
+      const match = (pattern.exec(parsedContent) || [])[0]
 
-        if (match) {
-          matchValue = indexData[match.trim()]
-          if (matchValue) parsedContent = parsedContent.replace(`{{${match}}}`, matchValue)
-        } else break
+      if (match) {
+        const matchValue = indexData[match.trim()]
+
+        if (matchValue) parsedContent = parsedContent.replace(`{{${match}}}`, matchValue)
+        recursMatches()
       }
-    }
+    })()
 
     return parsedContent
   }
