@@ -1,5 +1,5 @@
 {
-  "name": "modularize",
+  "name": "@mrf3/modularize",
   "version": "0.0.1",
   "description": "module to parse and include html templates",
   "main": "lib/index.js",
@@ -8,7 +8,7 @@
     "build": "webpack",
     "format": "standard --fix ./src",
     "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
-    "convert": "babel --presets='es2015' src/ --out-dir lib/"
+    "push": "babel --presets='es2015' src/ --out-dir lib/ && npm login && npm publish --access public"
   },
   "repository": {
     "type": "git",
