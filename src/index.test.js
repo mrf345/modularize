@@ -1,8 +1,5 @@
-import { Modularize } from './index'
-import fetch from 'node-fetch'
-
-
-jest.mock('node-fetch')
+import Modularize from './index'
+import { JSDOM } from 'jsdom'
 
 
 describe('Testing modules main functionalities', () => {
@@ -14,7 +11,16 @@ describe('Testing modules main functionalities', () => {
             (rs, rj) => rs({status: 200, text: () => self.templateContent}))
         self.mockFetchFail = new Promise((rs, rj) => rj(undefined))
         self.fetchSideEffects = [self.mockFetchSuccess, self.mockFetchFail]
-        fetch.fetch = () => self.fetchSideEffects.pop()
+        self.mockDom = new JSDOM()
+        global.fetch = () => self.fetchSideEffects.pop()
+        global.window = self.mockDom.window
+        global.document = global.window.document
+
+        const body = document.createElement('body')
+        const div = document.createElement('div')
+        div.classList.add('modularize')
+        body.appendChild(div)
+        document.body = body
         self.module = new Modularize()
     })
 
@@ -43,7 +49,10 @@ describe('Testing modules main functionalities', () => {
         expect(parsedContent).toBe(self.templateContent.replace('{{ test }}', replacedValue))
     })
 
-    test('test template parent selector', () => {
+    it('test template parent selector', () => {
+        expect.assertions(2)
         expect(self.module.parents.length).toEqual(1)
+        self.module.parents.forEach(
+            p => expect(p.className.includes(self.module.appendTo.slice(1))).toBeTruthy())
     })
 })

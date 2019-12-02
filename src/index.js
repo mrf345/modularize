@@ -1,10 +1,6 @@
-import { fetch } from 'node-fetch'
-import { JSDOM } from 'jsdom'
-const { window } = new JSDOM('<dev class="modularize"></div>')
-const { document } = window
+import '@babel/polyfill'
 
-
-export class Modularize {
+export default class Modularize {
     /**
      * Utility to help import html templates and parse them minimally.
      * @param {string} templatesPath path where the templates are stored.
