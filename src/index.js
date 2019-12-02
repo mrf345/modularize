@@ -57,7 +57,8 @@ export class Modularize {
         return parsedContent
     }
 
-    recursAndParseTemplates(index=this.startsFrom) {
+    recursAndParseTemplates(index) {
+        index = index || this.startsFrom
         this.parents = document.querySelectorAll(this.appendTo)
 
         this.getTemplate(index)

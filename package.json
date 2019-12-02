@@ -4,7 +4,8 @@
   "description": "module to parse and include html templates",
   "main": "src/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
     "@babel/preset-env": "^7.7.4",
     "@types/jest": "^24.0.23",
     "babel-jest": "^24.9.0",
+    "coveralls": "^3.0.9",
     "jest": "^24.9.0"
   },
   "dependencies": {
