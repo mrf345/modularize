@@ -2,13 +2,13 @@
   "name": "modularize",
   "version": "0.0.1",
   "description": "module to parse and include html templates",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "standard ./src && jest ./src",
-    "prepublish": "babel --presets='es2015' src/ --out-dir lib/",
-    "build": "webpack --config webpack.config.js",
+    "build": "webpack",
     "format": "standard --fix ./src",
-    "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls"
+    "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
+    "convert": "babel --presets='es2015' src/ --out-dir lib/"
   },
   "repository": {
     "type": "git",
@@ -38,13 +38,15 @@
     "babel-preset-es2015": "^6.24.1",
     "coveralls": "^3.0.9",
     "jest": "^24.9.0",
-    "jsdom": "15.2.1",
+    "jest-cli": "^24.9.0",
     "standard": "14.3.1",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.7.0"
+    "@babel/polyfill": "^7.7.0",
+    "node-fetch": "^2.6.0",
+    "jsdom": "^15.2.1"
   },
   "standard": {
     "globals": [
@@ -57,7 +59,13 @@
       "fetch",
       "document",
       "expect",
-      "describe"
+      "describe",
+      "jest"
     ]
+  },
+  "browser": {
+    "jsdom": false,
+    "https": false,
+    "fs": false
   }
 }
