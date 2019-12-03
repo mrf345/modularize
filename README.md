@@ -49,5 +49,3 @@ templates.load()
 - [x] setup standard js linting and lint code
 - [x] babel building packages. and git-ignore the lib/*
 - [x] add usage and installation. refactor front-end and link it.
-
-##### FIXME: link the bin with CDN
