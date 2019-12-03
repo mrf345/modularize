@@ -1,8 +1,12 @@
 import '@babel/polyfill'
 import fetch from 'node-fetch'
 import { JSDOM } from 'jsdom'
-const { window } = new JSDOM('<div class="modularize"></div>')
-const { document } = window
+
+if (JSDOM) {
+  // failsafe JSDOM in browsers
+  global.window = new JSDOM('<div class="modularize"></div>').window
+  global.document = window.document
+}
 
 export default class Modularize {
   /**
@@ -66,9 +70,7 @@ export default class Modularize {
     return parsedContent
   }
 
-  recursAndParseTemplates (index, resolve) {
-    index = index || this.startsFrom
-    resolve = resolve || Function
+  recursAndParseTemplates (index = this.startsFrom, resolve = Function) {
     this.parents = document.querySelectorAll(this.appendTo)
 
     this.getTemplate(index)
@@ -85,7 +87,7 @@ export default class Modularize {
   load () {
     return new Promise((resolve, reject) => {
       try {
-        this.recursAndParseTemplates(0, resolve)
+        this.recursAndParseTemplates(undefined, resolve)
       } catch (e) { reject(e) }
     })
   }

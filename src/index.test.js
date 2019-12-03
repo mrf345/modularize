@@ -1,6 +1,5 @@
 import Modularize from './index'
 import fetch from 'node-fetch'
-import { JSDOM } from 'jsdom'
 
 jest.mock('node-fetch')
 
@@ -11,10 +10,7 @@ describe('Testing modules main functionalities', () => {
     self.templateContent = '<h1>Resolved! {{ test }}</h1>'
     function text () { return self.templateContent } // strange js behaviour...
     self.mockResponse = { status: 200, text: text }
-    self.mockDom = new JSDOM()
     fetch.mockRejectedValue()
-    global.window = self.mockDom.window
-    global.document = global.window.document
 
     const body = document.createElement('body')
     const div = document.createElement('div')
