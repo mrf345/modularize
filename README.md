@@ -29,12 +29,14 @@ const templates = new Modularize(
      * @param {array} bypass array of index numbers to skip.
      * @param {string} extension the template file extension.
      * @param {boolean} autoLoad load the templates automatically on initiation.
-     * 
+     * @param {boolean} reverse to reverse the order of displaying templates.
+     * @param {integer} limit limit to the number of templates to load.
+     *
      * `data` I.E: {1: {var1: 'something', name: 'something else'}, ...}
      *  NOTE: if data is meant to be global then use '*' as a key instead of
      *        the template index number `1`.
      */
-    '/templates', {}, '.modularize', 1, [], 'html', false
+    '/templates', {}, '.modularize', 1, [], 'html', false, false, 0
 )
 
 templates.load()
