@@ -17,6 +17,7 @@ export default class Fetcher {
       (function recursTemplates (index) {
         const bypass = options.bypass.includes(`${index}.${options.extension}`)
         const hitLimit = options.limit && index >= options.limit
+        const postfix = options.data.postfix || ''
 
         function handleRejection (error) {
           console.warn(error)
@@ -25,7 +26,7 @@ export default class Fetcher {
             ? recursTemplates(index + 1) : resolve(templates)
         }
 
-        fetch(`${options.templatesPath}${index}.${options.extension}`)
+        fetch(`${options.templatesPath}${index}${postfix}.${options.extension}`)
           .then(r => {
             if (r.status === 200) {
               templates[index] = parseContent(index, r.text(), options.data)
