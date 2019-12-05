@@ -59,6 +59,10 @@ export default class Modularize {
     options.reverse = this.reverse || options.reverse || false
 
     if (!options.templatesPath.endsWith('/')) options.templatesPath += '/'
+    if (options.data.postfix && !options.data.postfix.startsWith('_')) {
+      options.data.postfix = '_' + options.data.postfix
+    }
+
     return options
   }
 
