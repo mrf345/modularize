@@ -8,7 +8,7 @@
     "build": "webpack",
     "format": "standard --fix ./src",
     "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
-    "push": "babel --presets='es2015' src/ --out-dir lib/ && npm login && npm publish --access public"
+    "push": "babel --config-file ./babel.config.js --plugins=@babel/plugin-proposal-class-properties src/ --out-dir lib/ && npm login && npm publish --access public"
   },
   "repository": {
     "type": "git",
@@ -27,16 +27,15 @@
   },
   "homepage": "https://github.com/mrf345/modularize#readme",
   "devDependencies": {
+    "@babel/cli": "^7.7.4",
     "@babel/core": "^7.7.4",
     "@babel/plugin-proposal-class-properties": "^7.7.4",
     "@babel/preset-env": "^7.7.4",
     "@types/jest": "^24.0.23",
-    "babel-cli": "^6.26.0",
     "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
     "babel-minify": "^0.5.1",
     "babel-minify-webpack-plugin": "^0.3.1",
-    "babel-preset-es2015": "^6.24.1",
     "coveralls": "^3.0.9",
     "jest": "^24.9.0",
     "jest-cli": "^24.9.0",
