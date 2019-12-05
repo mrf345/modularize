@@ -18,23 +18,22 @@ export default class Fetcher {
         const bypass = options.bypass.includes(`${index}.${options.extension}`)
         const hitLimit = options.limit && index >= options.limit
         const postfix = options.data.postfix || ''
-
-        function handleRejection (error) {
-          console.warn(error)
-
-          return bypass
-            ? recursTemplates(index + 1) : resolve(templates)
-        }
+        const handleRejection = () => bypass
+          ? recursTemplates(index + 1)
+          : resolve(templates)
 
         fetch(`${options.templatesPath}${index}${postfix}.${options.extension}`)
-          .then(r => {
-            if (r.status === 200) {
-              templates[index] = parseContent(index, r.text(), options.data)
+          .then(response => response.status === 200
+            ? response.text()
+            : handleRejection())
+          .then(text => {
+            templates[index] = parseContent(index, text, options.data)
 
-              return hitLimit
-                ? resolve(templates) : recursTemplates(index + 1)
-            } else handleRejection(Error('Failed to fetch template.'))
-          }).catch(handleRejection)
+            return hitLimit
+              ? resolve(templates)
+              : recursTemplates(index + 1)
+          })
+          .catch(handleRejection)
       })(options.startsFrom)
     })
   }
