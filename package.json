@@ -28,6 +28,7 @@
   "homepage": "https://github.com/mrf345/modularize#readme",
   "devDependencies": {
     "@babel/core": "^7.7.4",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
     "@babel/preset-env": "^7.7.4",
     "@types/jest": "^24.0.23",
     "babel-cli": "^6.26.0",

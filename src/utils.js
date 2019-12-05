@@ -12,5 +12,11 @@ module.exports = {
     const keys = Object.keys(obj).sort((a, b) => a - b)
 
     return reverse ? keys.reverse() : keys
+  },
+
+  notEmpty (input) {
+    if (Array.isArray(input)) return !!input.length
+    else if (typeof input === 'object') return !!Object.keys(input).length
+    else return !!input
   }
 }
