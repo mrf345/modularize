@@ -1,6 +1,6 @@
 {
   "name": "@mrf3/modularize",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "module to parse and include html templates",
   "main": "lib/index.js",
   "scripts": {

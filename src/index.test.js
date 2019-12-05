@@ -12,10 +12,7 @@ function commonSetup (self, rejected = true) {
     ? fetch.mockRejectedValue()
     : fetch.mockResolvedValue(self.mockResponse)
   setupElements()
-  self.module = rejected ? new Modularize() : new Modularize(
-    undefined, undefined, undefined, undefined, undefined,
-    undefined, false, undefined, 1
-  )
+  self.module = new Modularize(rejected ? undefined : { limit: 1 })
 
   self.getParents = () => Array.from(document.querySelectorAll(self.module.appendTo))
   self.getParsed = (value) => self.templateContent.replace('{{ test }}', value)
@@ -102,6 +99,19 @@ describe('Testing module main functionalities', () => {
         ))
     })
   })
+
+  it('test templates multiple options', () => {
+    self.module.stackOptions = Array(3).fill()
+      .map(i => self.module.getDefaultOptions({ limit: 3 }))
+
+    expect.assertions(1)
+    return self.module.load()
+      .then(templates => expect(templates).toEqual(Array(3).fill({
+        1: self.templateContent,
+        2: self.templateContent,
+        3: self.templateContent
+      })))
+  })
 })
 
 describe('Testing module units and exceptions', () => {
@@ -120,23 +130,9 @@ describe('Testing module units and exceptions', () => {
     expect(self.module.limit).toEqual(0)
   })
 
-  it('test `getTemplate` fetch failure', () => {
-    const exception = TypeError('something went wrong')
-    fetch.mockRejectedValue(exception)
-
-    return expect(self.module.getTemplate()).rejects.toEqual(exception)
-  })
-
-  it('test `getTemplate` fetch failsafe', () => {
-    const exception = TypeError('something went wrong')
-    fetch.mockRejectedValue(exception)
-
-    return expect(self.module.load()).resolves.toEqual({})
-  })
-
   it('test `load` promise failure', () => {
     const exception = TypeError('something went wrong')
-    self.module.getTemplates = () => { throw exception }
+    self.module.getDefaultOptions = () => { throw exception }
 
     return expect(self.module.load()).rejects.toEqual(exception)
   })
