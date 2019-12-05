@@ -22,21 +22,27 @@ import Modularize from '@mrf3/modularize'
 const templates = new Modularize(
     /**
      * Utility to help import html templates and parse them minimally.
-     * @param {string} templatesPath path where the templates are stored.
-     * @param {object} data data to parse the template with.
-     * @param {string} appendTo parent element selector to insert templates under.
-     * @param {integer} startsFrom index number to start descending from.
-     * @param {array} bypass array of index numbers to skip.
-     * @param {string} extension the template file extension.
-     * @param {boolean} autoLoad load the templates automatically on initiation.
-     * @param {boolean} reverse to reverse the order of displaying templates.
-     * @param {integer} limit limit to the number of templates to load.
+     * @param {object} options contains the module options.
+     * @param {array} stackOptions array of objects containing the module options.
+     *
+     * NOTE: when `stackOptions` is used `options` will be nullified.
+     *`options` = {
+     *  templatesPath: '/templates', // path where the templates are stored.
+     *  data: {}, // data to parse the template with.
+     *  appendTo: '.modularize', // element's selector to insert templates under.
+     *  startsFrom: 1, // index number to start descending from.
+     *  limit: 0, // limit to the number of templates to load.
+     *  bypass: [], // array of index numbers to skip.
+     *  extension: 'html', // the template file extension.
+     *  autoLoad: false, // load the templates automatically on initiation.
+     *  reverse: false,  // to reverse the order of displaying templates.
+     * }
      *
      * `data` I.E: {1: {var1: 'something', name: 'something else'}, ...}
-     *  NOTE: if data is meant to be global then use '*' as a key instead of
-     *        the template index number `1`.
+     *  NOTE: data to parse the template with. if data is meant to be global
+     *        then use '*' as a key instead of the template index number `1`.
      */
-    '/templates', {}, '.modularize', 1, [], 'html', false, false, 0
+    {}, []
 )
 
 templates.load()
