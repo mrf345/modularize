@@ -1,6 +1,6 @@
 import '@babel/polyfill'
 import { JSDOM } from 'jsdom'
-import { getOrderedKeys, setupElements } from './utils'
+import { getOrderedKeys, setupElements, notEmpty } from './utils'
 import Fetcher from './fetcher'
 
 if (JSDOM) {
@@ -35,8 +35,6 @@ export default class Modularize {
      */
   constructor (options = {}, stackOptions = []) {
     this.options = this.getDefaultOptions(options)
-    Object.keys(this.options).forEach(key => { this[key] = this.options[key] })
-
     this.stackOptions = stackOptions || []
     this.stackOptions = this.getDefaultStack()
 
@@ -48,20 +46,21 @@ export default class Modularize {
 
   getDefaultOptions (options) {
     options = options || this.options
-    options.templatesPath = this.templatesPath || options.templatesPath || '/templates'
-    options.data = this.data || options.data || {}
-    options.appendTo = this.appendTo || options.appendTo || '.modularize'
-    options.startsFrom = this.startsFrom || options.startsFrom || 1
-    options.limit = this.limit || options.limit || 0
-    options.bypass = this.bypass || options.bypass || []
-    options.extension = this.extension || options.extension || 'html'
-    options.autoLoad = this.autoLoad || options.autoLoad || false
-    options.reverse = this.reverse || options.reverse || false
+    options.templatesPath = options.templatesPath || '/templates'
+    options.appendTo = options.appendTo || '.modularize'
+    options.data = notEmpty(options.data) ? options.data : {}
+    options.startsFrom = options.startsFrom || 1
+    options.limit = options.limit || 0
+    options.bypass = options.bypass || []
+    options.extension = options.extension || 'html'
+    options.autoLoad = options.autoLoad || false
+    options.reverse = options.reverse || false
 
     if (!options.templatesPath.endsWith('/')) options.templatesPath += '/'
-    if (options.data.postfix && !options.data.postfix.startsWith('_')) {
-      options.data.postfix = '_' + options.data.postfix
-    }
+    Object.keys(options.data).forEach(key => {
+      const { postfix } = options.data[key] || {}
+      if (postfix && !postfix.startsWith('_')) options.data[key].postfix = '_' + postfix
+    })
 
     return options
   }
@@ -89,9 +88,9 @@ export default class Modularize {
     return parsedContent
   }
 
-  pushTemplates (templates = {}) {
-    const parents = document.querySelectorAll(this.appendTo)
-    const keys = getOrderedKeys(templates, this.reverse)
+  pushTemplates (templates = {}, options = {}) {
+    const parents = document.querySelectorAll(options.appendTo)
+    const keys = getOrderedKeys(templates, options.reverse)
 
     keys.forEach(key => {
       const content = templates[key]
@@ -104,11 +103,12 @@ export default class Modularize {
     return new Promise((resolve, reject) => {
       try {
         new Fetcher(this.getDefaultOptions(), this.getDefaultStack())
-          .load().then(templatesOrStack => {
-            templatesOrStack.length
-              ? templatesOrStack.forEach(templates => this.pushTemplates(templates))
-              : this.pushTemplates(templatesOrStack)
-            resolve(templatesOrStack)
+          .load().then(bundleOrBundles => {
+            bundleOrBundles.length
+              ? bundleOrBundles.forEach(bundle =>
+                this.pushTemplates(bundle.templates, bundle.options))
+              : this.pushTemplates(bundleOrBundles.templates, bundleOrBundles.options)
+            resolve(bundleOrBundles)
           })
       } catch (e) { reject(e) }
     })

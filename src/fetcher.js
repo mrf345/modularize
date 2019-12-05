@@ -1,4 +1,9 @@
 export default class Fetcher {
+  /* eslint-disable */
+  error = Error('Failed to fetch templated.')
+  reject = () => new Promise((r, reject) => reject(Fetcher.error))
+  /* eslint-enable */
+
   constructor (options = {}, stackOptions = []) {
     this.options = options || {}
     this.stackOptions = stackOptions || []
@@ -17,31 +22,28 @@ export default class Fetcher {
       (function recursTemplates (index) {
         const bypass = options.bypass.includes(`${index}.${options.extension}`)
         const hitLimit = options.limit && index >= options.limit
-        const postfix = options.data.postfix || ''
+        const postfix = (options.data[index] || options.data['*'] || {}).postfix || ''
+
+        const bundle = () => ({templates, options})
         const handleRejection = () => bypass
           ? recursTemplates(index + 1)
-          : resolve(templates)
+          : resolve(bundle())
 
         fetch(`${options.templatesPath}${index}${postfix}.${options.extension}`)
-          .then(response => response.status === 200
-            ? response.text()
-            : handleRejection())
+          .then(response => response.status === 200 ? response.text() : Fetcher.reject())
           .then(text => {
             templates[index] = parseContent(index, text, options.data)
 
             return hitLimit
-              ? resolve(templates)
+              ? resolve(bundle())
               : recursTemplates(index + 1)
-          })
-          .catch(handleRejection)
+          }).catch(handleRejection)
       })(options.startsFrom)
     })
   }
 
   load () {
     return Promise.all(this.stackOptions.map((options) => {
-      options.limit = options.limit * this.stackOptions.length
-
       return Fetcher.fetchTemplates(options)
     })).then(stack => new Promise((resolve) => {
       return resolve(stack.length === 1 ? stack.pop() : stack)
