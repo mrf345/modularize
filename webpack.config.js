@@ -1,5 +1,4 @@
 const { resolve } = require('path')
-const MinifyPlugin = require('babel-minify-webpack-plugin')
 
 module.exports = {
   entry: './src/index.js',
@@ -10,7 +9,7 @@ module.exports = {
     libraryTarget: 'window',
     libraryExport: 'default'
   },
-  plugins: [new MinifyPlugin()],
+  plugins: [],
   module: {
     rules: [{
       test: /\.js$/,
