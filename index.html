@@ -9,13 +9,18 @@
 <body>
   <script src="./bin/Modularize.min.js"></script>
   <script>
-    new Modularize({
-      appendTo: 'body',
+    m = new Modularize([{
+      appendTo: '.modularize',
+      autoLoad: true,
+      revers: true,
       data: {
         4: {adjective: 'Awesome'},
         '*': {date: new Date().toLocaleDateString()}
       }
-    })
+    }])
   </script>
+  <div class='modularize'>
+    <h1><b><center>Templates Container:</center></b></h1>
+  </div>
 </body>
 </html>
