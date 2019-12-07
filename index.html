@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Modularize Templates Example</title>
+</head>
+<body>
+  <script src="./bin/Modularize.min.js"></script>
+  <script>
+    new Modularize({
+      appendTo: 'body',
+      data: {
+        4: {adjective: 'Awesome'},
+        '*': {date: new Date().toLocaleDateString()}
+      }
+    })
+  </script>
+</body>
+</html>
