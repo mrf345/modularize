@@ -40,7 +40,7 @@ export default class Modularize {
 
     if (this.autoLoad) {
       if (document.readyState === 'complete') this.load()
-      else window.addEventListener('load', () => this.load())
+      else document.addEventListener('DOMContentLoaded', () => this.load())
     }
   }
 
