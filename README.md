@@ -1,5 +1,5 @@
 <h1 align='center'> Modularize </h1>
-<h4 align='center'>Front-End utility to help organizing large static websites.</h4>
+<h5 align='center'>Front-End utility to help in organizing large static websites.</h5>
 <p align='center'>
   <a href='https://travis-ci.org/mrf345/modularize'> <img src='https://travis-ci.org/mrf345/modularize.svg?branch=master' alt='Build Status' /></a>
   <a href='https://coveralls.io/github/mrf345/modularize?branch=testing'><img src='https://coveralls.io/repos/github/mrf345/modularize/badge.svg?branch=testing' alt='Coverage Status' /></a>
@@ -7,9 +7,7 @@
   <a href="https://standardjs.com"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Standard - JavaScript Style Guide"></a>
 </p>
 
-<h4><a href="https://mrf345.github.io/modularize/">Live Demo</a></h4>
-
-#### Install:
+### Install:
 
 ##### NPM: to bundle it however you like:
 - To install it:
@@ -33,7 +31,7 @@ import Modularize from '@mrf3/modularize'
 </script>
 ```
 
-#### Options:
+### Options:
 ```javascript
 var Templates = new Modularize(
     /**
@@ -65,9 +63,9 @@ Templates.load()
   .catch(function(error) { console.warn(error) })
 ```
 
-#### Example:
+### Example:
 This is a [live example](https://mrf345.github.io/modularize/) of a static website that's composed of two nested directories;
-[`templates`](https://github.com/mrf345/modularize/tree/gh-pages/templates) and [`subtemplates`](https://github.com/mrf345/modularize/tree/gh-pages/templates) each contains its own templates.
+[`templates`](https://github.com/mrf345/modularize/tree/gh-pages/templates) and [`subtemplates`](https://github.com/mrf345/modularize/tree/gh-pages/subtemplates) each contains its own templates.
 
 - Configuration used to achieve that in [`index.html`](https://github.com/mrf345/modularize/blob/gh-pages/index.html):
 ```javascript
