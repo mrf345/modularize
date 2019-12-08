@@ -1,15 +1,21 @@
 STASH="satash before pages push"
 MESSAGE="Updating bin/* with latest source-code"
-BUNDLE="bin/Modularize.min.js"
 
-git stash save "$STASH" && \
-npx webpack && \
-git add bin/* && \
-git commit -m "$MESSAGE" && \
-git checkout -b gh-pages && \
-git checkout testing "$BUNDLE" && \
-git commit -m "$MESSAGE" && \
-git push origin gh-pages && \
+git stash save "$STASH"
+npx webpack
+git add bin/*
+
+if [[ `git status --porcelain` ]]; then
+  git commit -m "$MESSAGE"
+fi
+
+git checkout gh-pages
+git checkout testing bin/*
+if [[ `git status --porcelain` ]]; then
+  git commit -m "$MESSAGE" && \
+  git push origin gh-pages
+fi
+
 git checkout testing && \
 git stash pop $(git stash list | grep "$STASH" | cut -d: -f1) && \
 echo "all good!"
