@@ -1,5 +1,5 @@
 try { global.fetch = require('whatwg-fetch').fetch }
-catch(e) { global.fetch = require('node-fetch').fetch }
+catch(e) { global.fetch = require('node-fetch') }
 
 export default class Fetcher {
   /* eslint-disable */
