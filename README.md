@@ -31,6 +31,9 @@ import Modularize from '@mrf3/modularize'
 </script>
 ```
 
+### Support:
+Should work with anything newer than `Internet Explorer 10` and `NodeJS 13`.
+
 ### Usage:
 ```javascript
 var Templates = new Modularize(
@@ -65,7 +68,7 @@ Templates.load()
 
 ### Example:
 This is a [live example](https://mrf345.github.io/modularize/) of a static website that's composed of two nested directories;
-[`templates`](https://github.com/mrf345/modularize/tree/gh-pages/templates) and [`subtemplates`](https://github.com/mrf345/modularize/tree/gh-pages/subtemplates) each contains its own templates.
+[`templates`](https://github.com/mrf345/modularize/tree/gh-pages/templates) and [`subtemplates`](https://github.com/mrf345/modularize/tree/gh-pages/templates/subtemplates) each contains its own templates.
 
 - Configuration used to achieve that in [`index.html`](https://github.com/mrf345/modularize/blob/gh-pages/index.html):
 ```javascript
