@@ -9,15 +9,17 @@
 <body>
   <script src="./bin/Modularize.min.js"></script>
   <script>
-    m = new Modularize([{
+    var Templates = new Modularize({}, [{
       appendTo: '.modularize',
-      autoLoad: true,
-      revers: true,
       data: {
         4: {adjective: 'Awesome'},
         '*': {date: new Date().toLocaleDateString()}
       }
     }])
+
+    Templates.load()
+      .then(function(bundle) { console.log('Loaded successfully: ', bundle.templates) })
+      .catch(function(error) { console.warn(error) })
   </script>
   <div class='modularize'>
     <h1><b><center>Templates Container:</center></b></h1>

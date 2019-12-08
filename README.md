@@ -8,6 +8,8 @@
   <a href="https://standardjs.com"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Standard - JavaScript Style Guide"></a>
 </p>
 
+<h4><a href="https://mrf345.github.io/modularize/">Live Demo</a></h4>
+
 #### Install:
 `npm i @mrf3/modularize --save`
 
@@ -34,8 +36,7 @@ const templates = new Modularize(
      *  limit: 0, // limit to the number of templates to load.
      *  bypass: [], // array of index numbers to skip.
      *  extension: 'html', // the template file extension.
-     *  autoLoad: false, // load the templates automatically on initiation.
-     *  reverse: false,  // to reverse the order of displaying templates.
+     *  reverseOrder: false,  // to reverse the order of displaying templates.
      * }
      *
      * `data` I.E: {1: {var1: 'something', name: 'something else'}, ...}
