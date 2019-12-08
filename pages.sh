@@ -1,11 +1,21 @@
-git stash --quiet
+STASH="satash before pages push"
+MESSAGE="Updating bin/* with latest source-code"
+
+git stash save "$STASH"
 npx webpack
 git add bin/*
-git commit -m 'Updating bin/* with latest source-code'
+
+if [[ `git status --porcelain` ]]; then
+  git commit -m "$MESSAGE"
+fi
+
 git checkout gh-pages
 git checkout testing bin/*
-git commit -m 'Updating bin/* with latest source-code'
-git push origin gh-pages
-git checkout testing
-git stash apply --quiet
+if [[ `git status --porcelain` ]]; then
+  git commit -m "$MESSAGE" && \
+  git push origin gh-pages
+fi
+
+git checkout testing && \
+git stash pop $(git stash list | grep "$STASH" | cut -d: -f1) && \
 echo "all good!"
