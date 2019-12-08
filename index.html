@@ -9,18 +9,30 @@
 <body>
   <script src="./bin/Modularize.min.js"></script>
   <script>
-    var Templates = new Modularize({}, [{
-      templatesPath: '/modularize/templates/',
-      appendTo: '.modularize',
+  var Templates = new Modularize({}, [
+    {
+      templatesPath: '/templates/',
+      appendTo: 'body',
       data: {
-        4: {adjective: 'Awesome'},
+        5: {adjective: 'Awesome'},
         '*': {date: new Date().toLocaleDateString()}
       }
-    }])
+    },
+    {
+      templatesPath: '/templates/subtemplates',
+      appendTo: '.subTemplates',
+      data: {
+        1: {postfix: 'intro'},
+        2: {postfix: 'info'},
+        3: {postfix: 'footer'},
+        '*': {var: ' cool '}
+      }
+    }
+  ])
 
-    Templates.load()
-      .then(function(bundle) { console.log('Loaded successfully: ', bundle.templates) })
-      .catch(function(error) { console.warn(error) })
+  Templates.load()
+    .then(function(bundle) { console.log('Loaded successfully: ', bundle) })
+    .catch(function(error) { console.warn(error) })
   </script>
   <div class='modularize'>
     <h1><b><center>Templates Container:</center></b></h1>
