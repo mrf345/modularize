@@ -1,3 +1,5 @@
+import { fetch } from 'whatwg-fetch'
+
 export default class Fetcher {
   /* eslint-disable */
   error = Error('Failed to fetch templated.')
@@ -14,7 +16,6 @@ export default class Fetcher {
   }
 
   static fetchTemplates (options = {}) {
-    const fetch = require('node-fetch')
     const { parseContent } = require('./index').default
     const templates = {}
 

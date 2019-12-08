@@ -25,8 +25,7 @@ export default class Modularize {
      *  limit: 0, // limit to the number of templates to load.
      *  bypass: [], // array of index numbers to skip.
      *  extension: 'html', // the template file extension.
-     *  autoLoad: false, // load the templates automatically on initiation.
-     *  reverse: false,  // to reverse the order of displaying templates.
+     *  reverseOrder: false,  // to reverse the order of displaying templates.
      * }
      *
      * `data` I.E: {1: {var1: 'something', name: 'something else'}, ...}
@@ -37,11 +36,6 @@ export default class Modularize {
     this.options = this.getDefaultOptions(options)
     this.stackOptions = stackOptions || []
     this.stackOptions = this.getDefaultStack()
-
-    if (this.autoLoad) {
-      if (document.readyState === 'complete') this.load()
-      else window.addEventListener('load', () => this.load())
-    }
   }
 
   getDefaultOptions (options) {
@@ -53,8 +47,7 @@ export default class Modularize {
     options.limit = options.limit || 0
     options.bypass = options.bypass || []
     options.extension = options.extension || 'html'
-    options.autoLoad = options.autoLoad || false
-    options.reverse = options.reverse || false
+    options.reverseOrder = options.reverseOrder || false
 
     if (!options.templatesPath.endsWith('/')) options.templatesPath += '/'
     Object.keys(options.data).forEach(key => {
@@ -71,10 +64,12 @@ export default class Modularize {
 
   static parseContent (index = 0, content = '', data = {}) {
     const indexData = data[index] || data['*']
+    const pattern = /{{.+?}}/g
     let parsedContent = content
 
+    if (data[index] && data['*']) Object.assign(indexData, data['*'])
     indexData && (function recursMatches () {
-      const match = (/{{.+?}}/g.exec(parsedContent) || [])[0]
+      const match = (pattern.exec(parsedContent) || [])[0]
 
       if (match) {
         const cleanMatch = match.replace('{{', '').replace('}}', '').trim()
@@ -89,13 +84,15 @@ export default class Modularize {
   }
 
   pushTemplates (templates = {}, options = {}) {
+    const keys = getOrderedKeys(templates, options.reverseOrder)
     const parents = document.querySelectorAll(options.appendTo)
-    const keys = getOrderedKeys(templates, options.reverse)
 
     keys.forEach(key => {
       const content = templates[key]
 
-      if (content) parents.forEach(ele => { ele.innerHTML += content })
+      content && Array(parents.length).fill().forEach((_, index) => {
+        if (parents[index]) parents[index].innerHTML += content
+      })
     })
   }
 
