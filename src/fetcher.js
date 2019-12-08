@@ -1,4 +1,4 @@
-import 'whatwg-fetch'
+import { fetch } from 'whatwg-fetch'
 
 export default class Fetcher {
   /* eslint-disable */

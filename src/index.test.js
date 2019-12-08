@@ -1,8 +1,8 @@
 import Modularize from './index'
-import fetch from 'node-fetch'
+import { fetch } from 'whatwg-fetch'
 import { setupElements } from './utils'
 
-jest.mock('node-fetch')
+jest.mock('whatwg-fetch')
 
 function commonSetup (self, rejected = true) {
   self.templateContent = '<h1 class="testing">Resolved! {{ test }}</h1>'
