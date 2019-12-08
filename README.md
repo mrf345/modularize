@@ -31,7 +31,7 @@ import Modularize from '@mrf3/modularize'
 </script>
 ```
 
-### Options:
+### Usage:
 ```javascript
 var Templates = new Modularize(
     /**
