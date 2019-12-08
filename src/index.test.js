@@ -84,7 +84,7 @@ describe('Testing module main functionalities', () => {
   it('test reversed multiple templateContent is pushed to parents', () => {
     const values = ['Awesome', 'Spectacular', 'Fantastic']
     self.module.options.limit = 3
-    self.module.options.reverse = true
+    self.module.options.reverseOrder = true
     self.module.options.data = {
       1: { test: values[0] },
       2: { test: values[1] },
@@ -103,18 +103,19 @@ describe('Testing module main functionalities', () => {
   })
 
   it('test templates multiple options', () => {
-    self.module.stackOptions = Array(3).fill()
-      .map(i => self.module.getDefaultOptions({ limit: 3 }))
+    self.module.stackOptions = Array(10).fill()
+      .map(i => self.module.getDefaultOptions({ limit: 4 }))
 
     expect.assertions(1)
     return self.module.load()
       .then(stack => {
         const templates = stack.map(bundle => bundle.templates)
 
-        expect(templates).toEqual(Array(3).fill({
+        expect(templates).toEqual(Array(10).fill({
           1: self.templateContent,
           2: self.templateContent,
-          3: self.templateContent
+          3: self.templateContent,
+          4: self.templateContent
         }))
       })
   })
@@ -132,7 +133,7 @@ describe('Testing module units and exceptions', () => {
     expect(self.module.options.startsFrom).toEqual(1)
     expect(self.module.options.bypass).toEqual([])
     expect(self.module.options.extension).toBe('html')
-    expect(self.module.options.reverse).toEqual(false)
+    expect(self.module.options.reverseOrder).toEqual(false)
     expect(self.module.options.limit).toEqual(0)
   })
 
